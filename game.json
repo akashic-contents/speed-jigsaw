@@ -219,7 +219,6 @@
 	"environment": {
 		"niconico": {
 			"supportedModes": [
-				"single",
 				"ranking"
 			]
 		},
