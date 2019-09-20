@@ -51,4 +51,19 @@ export class Util {
 		return {x: ofs.x, y: ofs.y, width: r.width, height: r.height};
 	}
 
+	static range(start: number, count: number, step: number = 1): number[] {
+		const result: number[] = [];
+		for (let i = 0; i < count; i++) {
+			result.push(start + i * step);
+		}
+		return result;
+	}
+
+	static repeat<T>(obj: T, count: number): T[] {
+		const result: T[] = [];
+		for (let i = 0; i < count; i++) {
+			result.push(obj);
+		}
+		return result;
+	}
 }

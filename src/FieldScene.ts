@@ -1,5 +1,4 @@
 import * as tl from "@akashic-extension/akashic-timeline";
-import * as Enumerable from "linq/linq";
 import { GameTimer } from "./GameTimer";
 import { Global } from "./Global";
 import { AudioPresenter } from "./AudioPresenter";
@@ -325,7 +324,7 @@ export class FieldScene extends AStage {
 
 	private getPictureNumber(): number {
 		if (this.pictureNumberTable.length < 1) {
-			this.pictureNumberTable = Util.shuffle(Enumerable.range(0, 5).toArray());
+			this.pictureNumberTable = Util.shuffle(Util.range(0, 5));
 			if (this.pictureNumberTable[0] === this.lastSelectPictureNumber) {
 				const n = this.pictureNumberTable[0];
 				this.pictureNumberTable[0] = 5;

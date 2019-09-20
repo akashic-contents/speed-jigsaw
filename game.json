@@ -229,11 +229,9 @@
 		"node_modules/@akashic-extension/akashic-timeline/lib/Easing.js",
 		"node_modules/@akashic-extension/akashic-timeline/lib/Timeline.js",
 		"node_modules/@akashic-extension/akashic-timeline/lib/Tween.js",
-		"node_modules/@akashic-extension/akashic-timeline/lib/index.js",
-		"node_modules/linq/linq.js"
+		"node_modules/@akashic-extension/akashic-timeline/lib/index.js"
 	],
 	"moduleMainScripts": {
-		"@akashic-extension/akashic-timeline": "node_modules/@akashic-extension/akashic-timeline/lib/index.js",
-		"linq": "node_modules/linq/linq"
+		"@akashic-extension/akashic-timeline": "node_modules/@akashic-extension/akashic-timeline/lib/index.js"
 	}
 }

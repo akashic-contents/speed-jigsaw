@@ -1,4 +1,3 @@
-import * as Enumerable from "linq/linq";
 import { Timeline } from "@akashic-extension/akashic-timeline";
 import { easeInCubic, easeOutQuart } from "@akashic-extension/akashic-timeline/lib/Easing";
 import { SpriteFactory } from "./SpriteFactory";
@@ -53,7 +52,7 @@ export class PieceSelectField extends g.E {
 		super({ scene: s });
 
 		// 出す順番
-		this.indexTable = Util.shuffle(Enumerable.range(0, pieces.length).toArray());
+		this.indexTable = Util.shuffle(Util.range(0, pieces.length));
 		this.pieceTable = pieces;
 
 		this.pieceLayer = new g.E({ scene: s });
