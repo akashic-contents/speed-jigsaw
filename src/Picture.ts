@@ -1,4 +1,3 @@
-import * as Enumerable from "linq/linq";
 import { SpriteFactory } from "./SpriteFactory";
 import { PieceSize } from "./PieceSelectField";
 import { Global } from "./Global";
@@ -89,8 +88,8 @@ export class Picture extends g.E {
 			}
 		}
 
-		const ctbl: number[] = Enumerable.repeat(0, dtbl.length).toArray();
-		Util.shuffle(Enumerable.range(0, dtbl.length).toArray()).forEach((idx) => {
+		const ctbl: number[] = Util.repeat(0, dtbl.length);
+		Util.shuffle(Util.range(0, dtbl.length)).forEach((idx) => {
 			const neigbars = this.getPiecesNeighborsIndex(idx, divX, divY);
 			let depress = dtbl[idx];
 			let convex = 0;

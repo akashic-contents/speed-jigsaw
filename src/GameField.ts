@@ -1,4 +1,3 @@
-import * as Enumerable from "linq/linq";
 import { SpriteFactory } from "./SpriteFactory";
 import { Global } from "./Global";
 import { Util } from "./Util";

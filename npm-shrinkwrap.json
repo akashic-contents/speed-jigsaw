@@ -2817,11 +2817,6 @@
         "astw": "^2.0.0"
       }
     },
-    "linq": {
-      "version": "3.1.1",
-      "resolved": "https://registry.npmjs.org/linq/-/linq-3.1.1.tgz",
-      "integrity": "sha512-A71Vnqe93xFkYYTuTzne1dQ+tVzXwYRrgZE3koGbXVd+3Ie5IiBgCpaFTnG+XkaSW/vPmsFAt2rG4znmJAxKlw=="
-    },
     "lodash": {
       "version": "4.17.11",
       "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.11.tgz",
