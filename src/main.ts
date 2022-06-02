@@ -7,10 +7,8 @@ import { AudioPresenter } from "./AudioPresenter";
 import { NumberFont } from "./NumberValue";
 import { OuterParamReceiver } from "./OuterParamReceiver";
 import { GameFont } from "./GameFont";
-import { SpriteFactory } from "./SpriteFactory";
-import { GameField } from "./GameField";
 
-function main(param: g.GameMainParameterObject): void {
+function main(_param: g.GameMainParameterObject): void {
 	const scene = new g.Scene({game: g.game, assetIds: [
 		"ui_common", "ui", "ui_2",
 		"glyph28", "glyph72", "glyph32_yellow",
@@ -25,7 +23,7 @@ function main(param: g.GameMainParameterObject): void {
 	OuterParamReceiver.receiveParamFromMessage(scene);
 	OuterParamReceiver.paramSetting();
 
-	scene.loaded.add(() => {
+	scene.onLoad.add(() => {
 		AudioPresenter.initialize(scene);
 		NumberFont.instance.initialize(scene);
 		GameFont.instance.initialize(scene);

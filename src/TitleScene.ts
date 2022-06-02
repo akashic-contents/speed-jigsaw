@@ -19,10 +19,10 @@ export class TitleScene extends AStage {
 		s.y = (_s.game.height - s.height) / 2;
 		s.modified();
 
-		let ap = null;
+		// let ap = null;
 		_s.setTimeout(
 			() => {
-				ap = AudioPresenter.instance.playSE("se_002c");
+				// ap = AudioPresenter.instance.playSE("se_002c");
 
 				_s.setTimeout(
 					() => {

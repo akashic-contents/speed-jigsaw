@@ -13,7 +13,7 @@ export class ResultScene extends AStage {
 
 	private root: g.E;
 
-	private scoreValue: number = 12;
+	private scoreValue = 12;
 
 	private animationTimer: g.TimerIdentifier;
 
@@ -74,13 +74,13 @@ export class ResultScene extends AStage {
 
 					const _min = 10 ** (this.text.text.length - 1); // **は べき乗との事
 					const _max = 10 ** (this.text.text.length) - 1;
-					const _v = Global.instance.random.get(_min, _max);
+					const _v = Math.floor(Global.instance.random.generate() * (_max - _min) + _min);
 					this.val = _v | 0;
 				},
 				1500
 			);
 
-		r.pointUp.add(
+		r.onPointUp.add(
 			() => {
 				this.finishStage();
 			},

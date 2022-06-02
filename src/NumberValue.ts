@@ -8,9 +8,9 @@ export enum NumberType {
 }
 
 class FontInfo {
-	glyphWidth: number = 0;
-	glyphHeight: number = 0;
-	map: string = "";
+	glyphWidth = 0;
+	glyphHeight = 0;
+	map = "";
 }
 
 export class NumberFontData {
@@ -37,7 +37,7 @@ export class NumberFont {
 	static generate(s: g.Scene, type: NumberType): NumberFontData {
 		const fi = NumberFont.fontInfo[type];
 		const f = new g.BitmapFont({
-			src: s.assets[NumberFont.IMAGE_NAME],
+			src: s.asset.getImageById(NumberFont.IMAGE_NAME),
 			map: Util.readJSON(s, fi.map),
 			defaultGlyphWidth: fi.glyphWidth,
 			defaultGlyphHeight: fi.glyphHeight
@@ -52,7 +52,7 @@ export class NumberFont {
 		return new NumberFontData(f, l);
 	}
 
-	private static IMAGE_NAME: string = "ui_common";
+	private static IMAGE_NAME = "ui_common";
 	private static _instance: NumberFont = null;
 
 	private static fontInfo: FontInfo[] = [
@@ -74,14 +74,14 @@ export class NumberFont {
 
 	initialize(_s: g.Scene) {
 		this.font28 = new g.BitmapFont({
-			src: _s.assets[NumberFont.IMAGE_NAME],
+			src: _s.asset.getImageById(NumberFont.IMAGE_NAME),
 			map: Util.readJSON(_s, "glyph28"),
 			defaultGlyphWidth: 28,
 			defaultGlyphHeight: 32
 		});
 
 		this.font72 = new g.BitmapFont({
-			src: _s.assets[NumberFont.IMAGE_NAME],
+			src: _s.asset.getImageById(NumberFont.IMAGE_NAME),
 			map: Util.readJSON(_s, "glyph72"),
 			defaultGlyphWidth: 72,
 			defaultGlyphHeight: 82

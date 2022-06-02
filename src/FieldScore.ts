@@ -12,7 +12,6 @@ export class FieldScore {
 		this.label.text = _v.toString();
 		this.label.invalidate();
 
-		const px = this.label.text.length * 28;
 		this.label.x = this.pt.x - this.label.width;
 		this.label.y = 5;
 		this.label.modified();

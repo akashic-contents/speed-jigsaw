@@ -62,10 +62,10 @@ export class GameField extends g.E {
 	private pieceField: PieceSelectField = null;
 	private remainView: RemainPieceView = null;
 
-	private selectPieceIndex: number = -1;
-	private pieceNum: number = 0;
+	private selectPieceIndex = -1;
+	private pieceNum = 0;
 
-	constructor(s: g.Scene, pictureId: number, level: number, delay: number = 0) {
+	constructor(s: g.Scene, pictureId: number, level: number, delay = 0) {
 		super({scene: s});
 
 		Global.instance.log("GameField: " + pictureId.toString());
@@ -177,7 +177,7 @@ export class GameField extends g.E {
 						return;
 					}
 					const pi = pic.Image;
-					pi.update.add(
+					pi.onUpdate.add(
 						() => {
 							pi.opacity = Util.lerp(pi.opacity, 0, 0.3, 0.08);
 						});
@@ -220,15 +220,15 @@ export class GameField extends g.E {
 				});
 				panel.tag = 0;
 
-				panel.update.add(
+				panel.onUpdate.add(
 					() => {
 						panel.opacity = Util.lerp(panel.opacity, panel.tag, 0.4);
 						panel.modified();
 					});
-				panel.pointDown.add(() => {
+				panel.onPointDown.add(() => {
 					panel.tag = 0.5;
 				});
-				panel.pointUp.add(() => {
+				panel.onPointUp.add(() => {
 					if (this.selectPieceIndex !== idx) {
 						panel.tag = 0;
 						panel.opacity = 0;
@@ -263,7 +263,7 @@ export class GameField extends g.E {
 		const move = 0.4;
 		const th = 0.03;
 		const tp = {x: t.x, y: t.y};
-		const nss = g.Util.createSpriteFromE(this.scene, p);
+		const nss = g.SpriteFactory.createSpriteFromE(this.scene, p)
 		const ns = new g.E({scene: this.scene});
 		const wp = Util.getWorldPos(p);
 
@@ -287,7 +287,7 @@ export class GameField extends g.E {
 			}
 		}
 
-		ns.update.add(
+		ns.onUpdate.add(
 			() => {
 				// 目的地へ移動する
 				ns.x = Util.lerp(ns.x, tp.x, move, th);

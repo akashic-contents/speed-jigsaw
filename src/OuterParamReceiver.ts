@@ -3,7 +3,7 @@ import { Global } from "./Global";
 export class OuterParamReceiver {
 
 	static receiveParamFromMessage(s: g.Scene) {
-		s.message.add((msg) => {
+		s.onMessage.add((msg) => {
 			if (msg.data && msg.data.type === "start") {
 				if (msg.data.parameters) {
 					if (msg.data.parameters.totalTimeLimit) {

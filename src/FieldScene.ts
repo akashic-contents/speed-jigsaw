@@ -6,8 +6,7 @@ import { FieldScore } from "./FieldScore";
 import { ReadyGo } from "./ReadyGo";
 import { AStage } from "./AStage";
 import { OuterParamReceiver } from "./OuterParamReceiver";
-import { GameField, LevelData } from "./GameField";
-import { easeOutQuad, easeInQuint } from "@akashic-extension/akashic-timeline/lib/Easing";
+import { GameField } from "./GameField";
 import { Queue } from "./Queue";
 import { TimeOver } from "./TimeOver";
 import { ComboView } from "./ComboView";
@@ -37,27 +36,25 @@ export class FieldScene extends AStage {
 	private scoreView: FieldScore;
 	private fieldTouchMask: g.FilledRect;
 
-	private firstLevelNum: number = 1;
-
-	private level: number = 1;
-	private score: number = 0;
-	private combo: number = 0;
+	private level = 1;
+	private score = 0;
+	private combo = 0;
 
 	private BG: g.E[] = [];
 
 	private scene: g.Scene = null;
 	private readyGo: ReadyGo = null;
 	private comboView: ComboView = null;
-	private elapsedStartTime: number = 0;
-	private answerElapsedTime: number = 0;
-	private seethroughRemainTime: number = 0;
+	private elapsedStartTime = 0;
+	private answerElapsedTime = 0;
+	private seethroughRemainTime = 0;
 
 	private gf: Queue<GameField> = new Queue<GameField>();
 
-	private pause: boolean = false;
+	private pause = false;
 
 	private pictureNumberTable: number[] = [];
-	private lastSelectPictureNumber: number = -1;
+	private lastSelectPictureNumber = -1;
 
 	constructor(_scene: g.Scene) {
 		super();
@@ -197,11 +194,9 @@ export class FieldScene extends AStage {
 		return time * 1000;
 	}
 
-	private createGameField(level: number, remain: number, startDelay: number = 0) {
+	private createGameField(level: number, remain: number, startDelay = 0) {
 
 		Global.instance.log("createGameField:" + level);
-
-		const lv = LevelData.getLevelInfo(level);
 
 		const g = new GameField(this.scene, this.getPictureNumber(), level, startDelay);
 		g.onPieceMatchCheck.push(
@@ -255,7 +250,7 @@ export class FieldScene extends AStage {
 		}
 	}
 
-	private generateAppendScore(isClear: boolean = false) {
+	private generateAppendScore(isClear = false) {
 		const nt = this.elapsedStartTime;
 		let score = FieldScene.SCORE_TOP - (((nt - this.answerElapsedTime) / 100) | 0);
 
@@ -282,7 +277,7 @@ export class FieldScene extends AStage {
 		const bgId = 3;
 
 		_tl.create(this.BG[bgId], {modified: this.BG[bgId].modified, destroyed: this.BG[bgId].destroyed})
-			.moveX(-(this.scene.game.width), animationTime, easeOutQuad)
+			.moveX(-(this.scene.game.width), animationTime, tl.Easing.easeOutQuad)
 			.con()
 			.every(
 				(e, p) => {

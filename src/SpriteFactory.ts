@@ -144,7 +144,7 @@ export class SpriteFactory {
 	static createAnimationSprite(
 		_scene: g.Scene,
 		srow: number, scolumn: number, row: number, column: number,
-		show: boolean = true): g.Sprite[] {
+		show = true): g.Sprite[] {
 		const spriteTable: g.Sprite[] = [];
 		const sw = 76;
 		const sh = 78;
@@ -214,7 +214,7 @@ export class SpriteFactory {
 		const sh = ey - sy;
 		return new g.Sprite({
 			scene: _s,
-			src: _s.assets[name],
+			src: _s.asset.getImageById(name),
 			srcX: sx,
 			srcY: sy,
 			srcWidth: sw,

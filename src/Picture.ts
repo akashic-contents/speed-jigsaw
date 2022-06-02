@@ -56,7 +56,7 @@ export class Picture extends g.E {
 
 		const img = new g.Sprite({
 			scene: s,
-			src: s.assets[imageName],
+			src: s.asset.getImageById(imageName),
 
 			srcX: sx,
 			srcY: sy,
@@ -192,7 +192,7 @@ export class Picture extends g.E {
 		return [upPiece, rightPiece, downPiece, leftPiece];
 	}
 
-	private createConvexPiece(assetName: string, info: g.CommonArea, piece: g.E, pieceSize: PieceSize, convex: number = 0) {
+	private createConvexPiece(assetName: string, info: g.CommonArea, piece: g.E, pieceSize: PieceSize, convex = 0) {
 		const s = this.scene;
 		// convex == 1248 => 上右下左
 		const maskP = this.getMaskPieceTbl(pieceSize);
@@ -223,7 +223,7 @@ export class Picture extends g.E {
 			// 抜き用ノリシロ作成
 			const ear = new g.Sprite({
 				scene: s,
-				src: s.assets[assetName],
+				src: s.asset.getImageById(assetName),
 				srcX: et.x,
 				srcY: et.y,
 				srcWidth: et.width,
@@ -240,12 +240,12 @@ export class Picture extends g.E {
 			maskP[i].modified();
 
 			// maskPとノリシロをmerge
-			ear.compositeOperation = g.CompositeOperation.SourceAtop;
+			ear.compositeOperation =  "source-atop";
 			ear.modified();
 			mergeE.append(maskP[i]);
 			mergeE.append(ear);
 			// createspritefromeでnewノリシロ作成
-			const newEar = g.Util.createSpriteFromE(s, mergeE);
+			const newEar = g.SpriteFactory.createSpriteFromE(s, mergeE);
 			// createspritefromeでpiece + ノリシロ作成
 			newEar.x = et.x - info.x;
 			newEar.y = et.y - info.y;
@@ -254,7 +254,7 @@ export class Picture extends g.E {
 			rootE.append(newEar);
 		});
 
-		const pieceSprite = g.Util.createSpriteFromE(s, rootE);
+		const pieceSprite = g.SpriteFactory.createSpriteFromE(s, rootE);
 		const se = new g.E({scene: s});
 		let pw = 0;
 		let ph = 0;
@@ -283,7 +283,7 @@ export class Picture extends g.E {
 		return se;
 	}
 
-	private createDepressPiece(assetName: string, info: g.CommonArea, psize: PieceSize, depress: number = 0): g.E {
+	private createDepressPiece(assetName: string, info: g.CommonArea, psize: PieceSize, depress = 0): g.E {
 		const s = this.scene;
 		const maskP = this.getMaskPieceTbl(psize);
 		const holeTbl: g.CommonOffset[] = [
@@ -296,7 +296,7 @@ export class Picture extends g.E {
 		// piece元作成
 		let piece = new g.Sprite({
 			scene: s,
-			src: s.assets[assetName],
+			src: s.asset.getImageById(assetName),
 			srcX: info.x,
 			srcY: info.y,
 
@@ -319,7 +319,7 @@ export class Picture extends g.E {
 			mp.y = holeTbl[i].y;
 			mp.modified();
 
-			mp.compositeOperation = g.CompositeOperation.Xor;
+			mp.compositeOperation = "xor";
 			mp.modified();
 
 			mergeE.append(piece);
@@ -328,7 +328,7 @@ export class Picture extends g.E {
 			mergeE.height = piece.height;
 			mergeE.modified();
 
-			piece = g.Util.createSpriteFromE(s, mergeE);
+			piece = g.SpriteFactory.createSpriteFromE(s, mergeE);
 		});
 
 		const se = new g.E({scene: s});

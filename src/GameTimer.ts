@@ -27,7 +27,7 @@ export class GameTimer {
 
 	private countdownFinishCallback: () => void;
 
-	private pause: boolean = false;
+	private pause = false;
 
 	private set tv(value: number) {
 		let v = value;

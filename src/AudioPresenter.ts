@@ -26,7 +26,7 @@ export class AudioPresenter {
 			}
 		}
 
-		this.bgmPlayer = (this._s.assets[name] as g.AudioAsset);
+		this.bgmPlayer = this._s.asset.getAudioById(name);
 		this.bgmPlayer.play();
 	}
 
@@ -43,13 +43,13 @@ export class AudioPresenter {
 		if (Global.instance.muteSound) {
 			return;
 		}
-		return (this._s.assets[name] as g.AudioAsset).play();
+		return this._s.asset.getAudioById(name).play();
 	}
 
 	playSE(name: string): g.AudioPlayer {
 		if (Global.instance.muteSound) {
 			return;
 		}
-		return (this._s.assets[name] as g.AudioAsset).play();
+		return this._s.asset.getAudioById(name).play();
 	}
 }

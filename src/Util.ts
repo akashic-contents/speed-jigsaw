@@ -15,7 +15,7 @@ export class Util {
 		result = array.slice(0);
 
 		while (++index < length) {
-			const rand = index + (Global.instance.random.get(0, (lastIndex - index)) | 0);
+			const rand = index + Math.floor(Global.instance.random.generate() * (lastIndex - index) | 0);
 			const value = result[rand];
 			result[rand] = result[index];
 			result[index] = value;
@@ -24,10 +24,10 @@ export class Util {
 	}
 
 	static readJSON(_s: g.Scene, name: string): any {
-		return JSON.parse((_s.assets[name] as g.TextAsset).data);
+		return _s.asset.getJSONContentById(name);
 	}
 
-	static lerp(a: number, b: number, t: number, matchThreshold: number = 0) {
+	static lerp(a: number, b: number, t: number, matchThreshold = 0) {
 		let r = (1 - t) * a + t * b;
 		if (0 < matchThreshold) {
 			if (Math.abs(r - a) < matchThreshold) {
@@ -38,20 +38,20 @@ export class Util {
 		return r;
 	}
 
-	static getWorldPos(r: g.E, px: number = 0, py: number = 0): g.CommonArea {
+	static getWorldPos(r: g.E, px = 0, py = 0): g.CommonArea {
 		let rt = r;
 		let mx = new g.PlainMatrix();
 		mx.reset(px, py);
 		do {
 			const cx = rt.getMatrix();
-			mx = cx.multiplyNew(mx);
+			mx = cx.multiplyNew(mx) as g.PlainMatrix;
 			rt = rt.parent as g.E;
 		} while (rt instanceof g.E);
 		const ofs = mx.multiplyPoint({x: 0, y: 0});
 		return {x: ofs.x, y: ofs.y, width: r.width, height: r.height};
 	}
 
-	static range(start: number, count: number, step: number = 1): number[] {
+	static range(start: number, count: number, step = 1): number[] {
 		const result: number[] = [];
 		for (let i = 0; i < count; i++) {
 			result.push(start + i * step);

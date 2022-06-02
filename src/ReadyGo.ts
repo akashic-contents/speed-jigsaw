@@ -1,6 +1,5 @@
 import { SpriteFactory } from "./SpriteFactory";
-import { Timeline } from "@akashic-extension/akashic-timeline";
-import { easeOutQuad, easeInQuad } from "@akashic-extension/akashic-timeline/lib/Easing";
+import { Timeline, Easing } from "@akashic-extension/akashic-timeline";
 import { AudioPresenter } from "./AudioPresenter";
 
 export class ReadyGo {
@@ -65,7 +64,7 @@ export class ReadyGo {
 			tt.create(_es, {modified: _es.modified, destroyed: _es.destroyed})
 				.scaleTo(1, 1, _hdelay)
 				.wait(stop)
-				.fadeOut(_hdelay, easeOutQuad)
+				.fadeOut(_hdelay, Easing.easeOutQuad)
 				.con()
 				.scaleTo(1.5, 1.5, _hdelay)
 				.every(
@@ -84,7 +83,7 @@ export class ReadyGo {
 		} else {
 			tt.create(_es, {modified: _es.modified, destroyed: _es.destroyed})
 				.scaleTo(1, 1, _hdelay)
-				.fadeOut(_hdelay, easeOutQuad)
+				.fadeOut(_hdelay, Easing.easeOutQuad)
 				.con()
 				.scaleTo(1.5, 1.5, _hdelay)
 				.every(
@@ -104,7 +103,7 @@ export class ReadyGo {
 	fadeInAction(_s: g.Scene, _es: g.Sprite, delay: number, cb: () => void) {
 		const tt = new Timeline(this._s);
 		tt.create(_es, {modified: _es.modified, destroyed: _es.destroyed})
-		.fadeOut(delay, easeOutQuad)
+			.fadeOut(delay, Easing.easeOutQuad)
 		.every(
 			(e, p) => {
 				if (1 <= p) {
@@ -120,7 +119,7 @@ export class ReadyGo {
 	fadeOutAction(_s: g.Scene, _es: g.Sprite, delay: number, cb: () => void) {
 		const tt = new Timeline(this._s);
 		tt.create(_es, {modified: _es.modified, destroyed: _es.destroyed})
-		.fadeOut(delay, easeOutQuad)
+			.fadeOut(delay, Easing.easeOutQuad)
 		.every(
 			(e, p) => {
 				if (p <= 1) {

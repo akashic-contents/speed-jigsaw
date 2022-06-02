@@ -1,7 +1,7 @@
 export class GameFont {
 	static instance: GameFont = new GameFont();
 
-	private fontSize: number = 34;
+	private fontSize = 34;
 	private _s: g.Scene;
 	private font: g.DynamicFont = null;
 	private boldFont: g.DynamicFont = null;
@@ -14,11 +14,11 @@ export class GameFont {
 		this._s = _s;
 	}
 
-	generateLabel(col: string, isBold: boolean = false): g.Label {
+	generateLabel(col: string, isBold = false): g.Label {
 		return this.generateLabelWithSize(this.font.size, col, isBold);
 	}
 
-	generateLabelWithSize(size: number, col: string, isBold: boolean = false): g.Label {
+	generateLabelWithSize(size: number, col: string, isBold = false): g.Label {
 
 		const useFont: g.Font = isBold ? this.boldFont : this.font;
 
@@ -35,13 +35,13 @@ export class GameFont {
 		});
 	}
 
-	private createFont(_size: number, isBold: boolean = false): g.DynamicFont {
+	private createFont(_size: number, isBold = false): g.DynamicFont {
 
-		const weight: g.FontWeight = isBold ? g.FontWeight.Bold : g.FontWeight.Normal;
+		const weight: g.FontWeightString = isBold ? "bold" : "normal";
 
 		return new g.DynamicFont({
 			game: g.game,
-			fontFamily: g.FontFamily.SansSerif,
+			fontFamily: "sans-serif",
 			size: _size,
 			fontWeight: weight
 		});

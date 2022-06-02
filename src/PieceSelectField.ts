@@ -1,5 +1,4 @@
-import { Timeline } from "@akashic-extension/akashic-timeline";
-import { easeInCubic, easeOutQuart } from "@akashic-extension/akashic-timeline/lib/Easing";
+import { Timeline, Easing } from "@akashic-extension/akashic-timeline";
 import { SpriteFactory } from "./SpriteFactory";
 import { Global } from "./Global";
 import { Util } from "./Util";
@@ -24,7 +23,7 @@ export class PieceSelectField extends g.E {
 		return this.indexTable.length;
 	}
 
-	selectFrameIndex: number = -1;
+	selectFrameIndex = -1;
 
 	onSlideInFinish: Array<(frameIdx: number, pieceIndex: number) => void> = [];
 	onTouchGetPiece: Array<(idx: number) => boolean> = [];
@@ -42,11 +41,11 @@ export class PieceSelectField extends g.E {
 	private selectFrame: g.Sprite[] = [];
 	private pieceEntryIndex: number[] = [];
 
-	private currentShowIndex: number = -1;
+	private currentShowIndex = -1;
 
 	private lastSelect: Array<{ frameIdx: number, pieceIdx: number}> = [];
 
-	private requestCount: number = 0;
+	private requestCount = 0;
 
 	constructor(s: g.Scene, pieceSize: PieceSize, pieces: g.E[]) {
 		super({ scene: s });
@@ -77,15 +76,15 @@ export class PieceSelectField extends g.E {
 
 		this.append(this.touchLayer);
 		tf.forEach((_tf, tfidx) => {
-			_tf.pointDown.add(
+			_tf.onPointDown.add(
 				() => {
 					this.selectFrame.forEach((x, idx) => {
 						x.opacity = (tf2sf[_tf.id] === idx) ? 1 : 0;
 						x.modified();
 					});
 				});
-			_tf.pointUp.add(() => {
-				let touchDisableRequest: boolean = false;
+			_tf.onPointUp.add(() => {
+				let touchDisableRequest = false;
 				const pieceIdx = this.pieceEntryIndex[tfidx];
 				Global.instance.log("selectFrameIndex: " + this.selectFrameIndex + " => " + tfidx);
 				this.selectFrameIndex = tfidx;
@@ -102,15 +101,9 @@ export class PieceSelectField extends g.E {
 				this.currentShowIndex = idx;
 				tf.forEach(_tf => _tf.touchable = true);
 			});
-
-		let updateCnt = 0;
-		this.update.add(
-			() => {
-				updateCnt++;
-			});
 	}
 
-	get(num: number = 1) {
+	get() {
 		const tl = new Timeline(this.scene);
 		const layer = new g.E({ scene: this.scene });
 		const index = this.indexTable.pop();
@@ -140,7 +133,7 @@ export class PieceSelectField extends g.E {
 		const time = PieceSelectField.SLIDEIN_ANIM_WAIT;
 
 		tl.create(layer, { modified: layer.modified, destroyed: layer.destroyed })
-			.moveTo(px, py, time, easeOutQuart)
+			.moveTo(px, py, time, Easing.easeOutQuart)
 			.con()
 			.every(
 				(e, p) => {
