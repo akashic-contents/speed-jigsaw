@@ -5,7 +5,9 @@ export abstract class AStage {
 	abstract activate(_s: g.Scene): void;
 	abstract dispose(): void;
 
-	finishStage() {
-		this.finishCallback.forEach(cb => {cb(); });
+	finishStage(): void {
+		this.finishCallback.forEach(cb => {
+			cb();
+		});
 	}
 }

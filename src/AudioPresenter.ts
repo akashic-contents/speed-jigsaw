@@ -3,18 +3,18 @@ import { Global } from "./Global";
 export class AudioPresenter {
 	static instance: AudioPresenter;
 
-	public static initialize(_s: g.Scene) {
-		AudioPresenter.instance = new AudioPresenter(_s);
-	}
-
 	_s: g.Scene = null;
 	bgmPlayer: g.AudioAsset = null;
+
+	public static initialize(_s: g.Scene): void {
+		AudioPresenter.instance = new AudioPresenter(_s);
+	}
 
 	constructor(_scene: g.Scene) {
 		this._s = _scene;
 	}
 
-	playBGM(name: string)  {
+	playBGM(name: string): void  {
 		if (Global.instance.muteSound) {
 			return;
 		}
@@ -26,11 +26,11 @@ export class AudioPresenter {
 			}
 		}
 
-		this.bgmPlayer = (this._s.assets[name] as g.AudioAsset);
+		this.bgmPlayer = this._s.asset.getAudioById(name);
 		this.bgmPlayer.play();
 	}
 
-	stopBGM() {
+	stopBGM(): void {
 		if (this.bgmPlayer === null) {
 			return;
 		}
@@ -43,13 +43,13 @@ export class AudioPresenter {
 		if (Global.instance.muteSound) {
 			return;
 		}
-		return (this._s.assets[name] as g.AudioAsset).play();
+		return this._s.asset.getAudioById(name).play();
 	}
 
 	playSE(name: string): g.AudioPlayer {
 		if (Global.instance.muteSound) {
 			return;
 		}
-		return (this._s.assets[name] as g.AudioAsset).play();
+		return this._s.asset.getAudioById(name).play();
 	}
 }

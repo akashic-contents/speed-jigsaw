@@ -1,7 +1,6 @@
-import { Timeline } from "@akashic-extension/akashic-timeline";
-import { easeInCubic, easeOutQuart } from "@akashic-extension/akashic-timeline/lib/Easing";
-import { SpriteFactory } from "./SpriteFactory";
+import { Timeline, Easing } from "@akashic-extension/akashic-timeline";
 import { Global } from "./Global";
+import { SpriteFactory } from "./SpriteFactory";
 import { Util } from "./Util";
 
 export enum PieceSize {
@@ -44,7 +43,7 @@ export class PieceSelectField extends g.E {
 
 	private currentShowIndex: number = -1;
 
-	private lastSelect: Array<{ frameIdx: number, pieceIdx: number}> = [];
+	private lastSelect: Array<{ frameIdx: number; pieceIdx: number}> = [];
 
 	private requestCount: number = 0;
 
@@ -77,15 +76,15 @@ export class PieceSelectField extends g.E {
 
 		this.append(this.touchLayer);
 		tf.forEach((_tf, tfidx) => {
-			_tf.pointDown.add(
+			_tf.onPointDown.add(
 				() => {
 					this.selectFrame.forEach((x, idx) => {
 						x.opacity = (tf2sf[_tf.id] === idx) ? 1 : 0;
 						x.modified();
 					});
 				});
-			_tf.pointUp.add(() => {
-				let touchDisableRequest: boolean = false;
+			_tf.onPointUp.add(() => {
+				let touchDisableRequest = false;
 				const pieceIdx = this.pieceEntryIndex[tfidx];
 				Global.instance.log("selectFrameIndex: " + this.selectFrameIndex + " => " + tfidx);
 				this.selectFrameIndex = tfidx;
@@ -98,19 +97,13 @@ export class PieceSelectField extends g.E {
 		});
 
 		this.onSlideInFinish.push(
-			(gi, idx) => {
+			(_gi, idx) => {
 				this.currentShowIndex = idx;
 				tf.forEach(_tf => _tf.touchable = true);
 			});
-
-		let updateCnt = 0;
-		this.update.add(
-			() => {
-				updateCnt++;
-			});
 	}
 
-	get(num: number = 1) {
+	get(): void {
 		const tl = new Timeline(this.scene);
 		const layer = new g.E({ scene: this.scene });
 		const index = this.indexTable.pop();
@@ -140,10 +133,10 @@ export class PieceSelectField extends g.E {
 		const time = PieceSelectField.SLIDEIN_ANIM_WAIT;
 
 		tl.create(layer, { modified: layer.modified, destroyed: layer.destroyed })
-			.moveTo(px, py, time, easeOutQuart)
+			.moveTo(px, py, time, Easing.easeOutQuart)
 			.con()
 			.every(
-				(e, p) => {
+				(_e, p) => {
 					if (p < 1) {
 						return;
 					}
@@ -160,7 +153,7 @@ export class PieceSelectField extends g.E {
 		}
 	}
 
-	setNextSelectFrame() {
+	setNextSelectFrame(): void {
 		this.selectFrame.forEach(x => {
 			x.opacity = 0;
 			x.modified();
@@ -180,20 +173,20 @@ export class PieceSelectField extends g.E {
 		});
 	}
 
-	releaseSelectObject() {
+	releaseSelectObject(): void {
 		Global.instance.log("releaseSelectObject(" + this.selectFrameIndex + ")");
 		this.pieceEntryIndex[this.selectFrameIndex] = -1;
 	}
 
-	private pushSelect(frameIdx: number, pieceIdx: number) {
+	private pushSelect(frameIdx: number, pieceIdx: number): void {
 		this.lastSelect.push({frameIdx: frameIdx, pieceIdx: pieceIdx});
 	}
 
-	private popSelect(): {frameIdx: number, pieceIdx: number} {
+	private popSelect(): { frameIdx: number; pieceIdx: number } {
 		return this.lastSelect.pop();
 	}
 
-	private clearSelect() {
+	private clearSelect(): void {
 		this.lastSelect = [];
 	}
 
@@ -215,7 +208,7 @@ export class PieceSelectField extends g.E {
 		return p;
 	}
 
-	private selectFrameInit(r: g.E, f: g.Sprite) {
+	private selectFrameInit(r: g.E, f: g.Sprite): void {
 
 		f.x = -(f.width / 2);
 		f.y = -(f.height / 2);

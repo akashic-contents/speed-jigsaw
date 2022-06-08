@@ -7,7 +7,7 @@ export class SpriteFactory {
 		return SpriteFactory.createSpriteCore(_scene, "ui", 1, 614, 453, 866);
 	}
 
-	static createPictureFrame(_s: g.Scene) {
+	static createPictureFrame(_s: g.Scene): g.Sprite {
 		return SpriteFactory.createSpriteCore(_s, "ui", 2, 2, 288, 288);
 	}
 
@@ -185,23 +185,23 @@ export class SpriteFactory {
 		return SpriteFactory.createSprite(_s, 38, 524, 66, 552);
 	}
 
-	static createComboRedBase(_s: g.Scene) {
+	static createComboRedBase(_s: g.Scene): g.Sprite {
 		return SpriteFactory.createSprite(_s, 67, 524, 173, 554);
 	}
 
-	static createComboYellowBase(_s: g.Scene) {
+	static createComboYellowBase(_s: g.Scene): g.Sprite {
 		return SpriteFactory.createSprite(_s, 174, 524, 297, 562);
 	}
 
-	static createReady(_s: g.Scene) {
+	static createReady(_s: g.Scene): g.Sprite {
 		return SpriteFactory.createSprite(_s, 447, 188, 691, 284);
 	}
 
-	static createStart(_s: g.Scene) {
+	static createStart(_s: g.Scene): g.Sprite {
 		return SpriteFactory.createSprite(_s, 447, 285, 733, 364);
 	}
 
-	static createTimeUp(_s: g.Scene) {
+	static createTimeUp(_s: g.Scene): g.Sprite {
 		return SpriteFactory.createSprite(_s, 478, 444, 826, 539);
 	}
 
@@ -209,12 +209,12 @@ export class SpriteFactory {
 		return this.createSpriteCore(_scene, "ui_common", sx, sy, ex, ey);
 	}
 
-	static createSpriteCore(_s: g.Scene, name: string, sx: number, sy: number, ex: number, ey: number) {
+	static createSpriteCore(_s: g.Scene, name: string, sx: number, sy: number, ex: number, ey: number): g.Sprite {
 		const sw = ex - sx;
 		const sh = ey - sy;
 		return new g.Sprite({
 			scene: _s,
-			src: _s.assets[name],
+			src: _s.asset.getImageById(name),
 			srcX: sx,
 			srcY: sy,
 			srcWidth: sw,

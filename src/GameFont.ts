@@ -6,7 +6,7 @@ export class GameFont {
 	private font: g.DynamicFont = null;
 	private boldFont: g.DynamicFont = null;
 
-	initialize(_s: g.Scene) {
+	initialize(_s: g.Scene): void {
 		const _f = this.createFont(this.fontSize);
 		this.font = _f;
 		const _bf = this.createFont(this.fontSize, true);
@@ -37,11 +37,11 @@ export class GameFont {
 
 	private createFont(_size: number, isBold: boolean = false): g.DynamicFont {
 
-		const weight: g.FontWeight = isBold ? g.FontWeight.Bold : g.FontWeight.Normal;
+		const weight: g.FontWeightString = isBold ? "bold" : "normal";
 
 		return new g.DynamicFont({
 			game: g.game,
-			fontFamily: g.FontFamily.SansSerif,
+			fontFamily: "sans-serif",
 			size: _size,
 			fontWeight: weight
 		});

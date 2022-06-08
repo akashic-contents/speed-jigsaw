@@ -1,5 +1,5 @@
-import { SpriteFactory } from "./SpriteFactory";
 import { NumberFont } from "./NumberValue";
+import { SpriteFactory } from "./SpriteFactory";
 
 export class GameTimer {
 
@@ -12,7 +12,7 @@ export class GameTimer {
 		this.pause = v;
 	}
 
-	get Pause() {
+	get Pause(): boolean {
 		return this.pause;
 	}
 
@@ -38,7 +38,7 @@ export class GameTimer {
 		this.timer.text = (v | 0).toString();
 	}
 
-	get now() {
+	get now(): number {
 		return this.timerValue | 0;
 	}
 
@@ -70,13 +70,13 @@ export class GameTimer {
 		this._s = _s;
 	}
 
-	destroy() {
+	destroy(): void {
 		if (!this.clockIcon.destroyed()) {
 			this.clockIcon.destroy();
 		}
 	}
 
-	show(px: number, py: number, startSecond: number) {
+	show(px: number, py: number, startSecond: number): void {
 		this.clockIcon.show();
 		this.tv = startSecond;
 		this.timer.invalidate();

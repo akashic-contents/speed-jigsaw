@@ -1,5 +1,5 @@
-import { SpriteFactory } from "./SpriteFactory";
 import { AStage } from "./AStage";
+import { SpriteFactory } from "./SpriteFactory";
 
 export class ManualScene extends AStage {
 	private scene: g.Scene;
@@ -10,7 +10,7 @@ export class ManualScene extends AStage {
 		this.scene = scene;
 	}
 
-	activate(_s: g.Scene)  {
+	activate(_s: g.Scene): void {
 		const s = SpriteFactory.createManual(_s);
 		s.x = (_s.game.width - s.width) / 2;
 		s.y = (_s.game.height - s.height) / 2;
@@ -29,7 +29,7 @@ export class ManualScene extends AStage {
 		this.scene = _s;
 	}
 
-	dispose() {
+	dispose(): void {
 		if (this.title.destroyed()) {
 			return;
 		}

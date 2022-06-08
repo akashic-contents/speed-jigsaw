@@ -1,5 +1,5 @@
-import { SpriteFactory } from "./SpriteFactory";
 import { NumberFont, NumberType } from "./NumberValue";
+import { SpriteFactory } from "./SpriteFactory";
 
 export class ComboView extends g.E {
 

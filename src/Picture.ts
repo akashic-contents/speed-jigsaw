@@ -1,6 +1,6 @@
-import { SpriteFactory } from "./SpriteFactory";
-import { PieceSize } from "./PieceSelectField";
 import { Global } from "./Global";
+import { PieceSize } from "./PieceSelectField";
+import { SpriteFactory } from "./SpriteFactory";
 import { Util } from "./Util";
 
 export enum MaskDir {
@@ -46,7 +46,7 @@ export class Picture extends g.E {
 		this.append(this.image);
 	}
 
-	createImage(imageName: string, imageId: number, divX: number, divY: number): {image: g.Sprite, div: g.E[], lines: g.Sprite[]} {
+	createImage(imageName: string, imageId: number, divX: number, divY: number): {image: g.Sprite; div: g.E[]; lines: g.Sprite[]} {
 		const s = this.scene;
 
 		const sx: number = 1 + ((imageId % 3) * Picture.IMAGE_PIX);
@@ -56,7 +56,7 @@ export class Picture extends g.E {
 
 		const img = new g.Sprite({
 			scene: s,
-			src: s.assets[imageName],
+			src: s.asset.getImageById(imageName),
 
 			srcX: sx,
 			srcY: sy,
@@ -73,11 +73,11 @@ export class Picture extends g.E {
 		let psize = PieceSize.L;
 		switch (divX) { // FIXME: ちょっと雑
 			case 3:
-			psize = PieceSize.M;
-			break;
+				psize = PieceSize.M;
+				break;
 			case 4:
-			psize = PieceSize.S;
-			break;
+				psize = PieceSize.S;
+				break;
 		}
 
 		// 全部作って
@@ -192,7 +192,7 @@ export class Picture extends g.E {
 		return [upPiece, rightPiece, downPiece, leftPiece];
 	}
 
-	private createConvexPiece(assetName: string, info: g.CommonArea, piece: g.E, pieceSize: PieceSize, convex: number = 0) {
+	private createConvexPiece(assetName: string, info: g.CommonArea, piece: g.E, pieceSize: PieceSize, convex: number = 0): g.E {
 		const s = this.scene;
 		// convex == 1248 => 上右下左
 		const maskP = this.getMaskPieceTbl(pieceSize);
@@ -223,7 +223,7 @@ export class Picture extends g.E {
 			// 抜き用ノリシロ作成
 			const ear = new g.Sprite({
 				scene: s,
-				src: s.assets[assetName],
+				src: s.asset.getImageById(assetName),
 				srcX: et.x,
 				srcY: et.y,
 				srcWidth: et.width,
@@ -240,12 +240,12 @@ export class Picture extends g.E {
 			maskP[i].modified();
 
 			// maskPとノリシロをmerge
-			ear.compositeOperation = g.CompositeOperation.SourceAtop;
+			ear.compositeOperation =  "source-atop";
 			ear.modified();
 			mergeE.append(maskP[i]);
 			mergeE.append(ear);
 			// createspritefromeでnewノリシロ作成
-			const newEar = g.Util.createSpriteFromE(s, mergeE);
+			const newEar = g.SpriteFactory.createSpriteFromE(s, mergeE);
 			// createspritefromeでpiece + ノリシロ作成
 			newEar.x = et.x - info.x;
 			newEar.y = et.y - info.y;
@@ -254,7 +254,7 @@ export class Picture extends g.E {
 			rootE.append(newEar);
 		});
 
-		const pieceSprite = g.Util.createSpriteFromE(s, rootE);
+		const pieceSprite = g.SpriteFactory.createSpriteFromE(s, rootE);
 		const se = new g.E({scene: s});
 		let pw = 0;
 		let ph = 0;
@@ -296,7 +296,7 @@ export class Picture extends g.E {
 		// piece元作成
 		let piece = new g.Sprite({
 			scene: s,
-			src: s.assets[assetName],
+			src: s.asset.getImageById(assetName),
 			srcX: info.x,
 			srcY: info.y,
 
@@ -319,7 +319,7 @@ export class Picture extends g.E {
 			mp.y = holeTbl[i].y;
 			mp.modified();
 
-			mp.compositeOperation = g.CompositeOperation.Xor;
+			mp.compositeOperation = "xor";
 			mp.modified();
 
 			mergeE.append(piece);
@@ -328,7 +328,7 @@ export class Picture extends g.E {
 			mergeE.height = piece.height;
 			mergeE.modified();
 
-			piece = g.Util.createSpriteFromE(s, mergeE);
+			piece = g.SpriteFactory.createSpriteFromE(s, mergeE);
 		});
 
 		const se = new g.E({scene: s});
@@ -344,16 +344,16 @@ export class Picture extends g.E {
 		let tbl: g.Sprite[] = [];
 		switch (size) {
 			case PieceSize.L:
-			tbl = SpriteFactory.createMaskL(this.scene);
-			break;
+				tbl = SpriteFactory.createMaskL(this.scene);
+				break;
 			case PieceSize.M:
-			tbl = SpriteFactory.createMaskM(this.scene);
-			break;
+				tbl = SpriteFactory.createMaskM(this.scene);
+				break;
 			case PieceSize.S:
-			tbl = SpriteFactory.createMaskS(this.scene);
-			break;
+				tbl = SpriteFactory.createMaskS(this.scene);
+				break;
 			default:
-			throw new Error("unknown size: " + size);
+				throw new Error("unknown size: " + size);
 		}
 		return tbl;
 	}
@@ -362,16 +362,16 @@ export class Picture extends g.E {
 		let tbl: g.Sprite[] = [];
 		switch (size) {
 			case PieceSize.L:
-			tbl = SpriteFactory.createGuideL(this.scene);
-			break;
+				tbl = SpriteFactory.createGuideL(this.scene);
+				break;
 			case PieceSize.M:
-			tbl = SpriteFactory.createGuideM(this.scene);
-			break;
+				tbl = SpriteFactory.createGuideM(this.scene);
+				break;
 			case PieceSize.S:
-			tbl = SpriteFactory.createGuideS(this.scene);
-			break;
+				tbl = SpriteFactory.createGuideS(this.scene);
+				break;
 			default:
-			throw new Error("unknown size: " + size);
+				throw new Error("unknown size: " + size);
 		}
 
 		return tbl;

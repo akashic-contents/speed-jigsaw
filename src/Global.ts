@@ -2,10 +2,6 @@ export class Global {
 
 	static instance: Global;
 
-	static init() {
-		Global.instance = new Global();
-	}
-
 	/**
 	 * ゲームプレイの点数
 	 */
@@ -36,6 +32,10 @@ export class Global {
 	 */
 	DEBUG: boolean;
 
+	static init(): void {
+		Global.instance = new Global();
+	}
+
 	constructor() {
 		this.score = 0;
 		this.totalTimeLimit = 82;
@@ -46,7 +46,7 @@ export class Global {
 
 	}
 
-	log(l: string) {
+	log(l: string): void {
 		if (this.DEBUG) {
 			console.log(l);
 		}

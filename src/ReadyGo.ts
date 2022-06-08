@@ -1,7 +1,6 @@
-import { SpriteFactory } from "./SpriteFactory";
-import { Timeline } from "@akashic-extension/akashic-timeline";
-import { easeOutQuad, easeInQuad } from "@akashic-extension/akashic-timeline/lib/Easing";
+import { Timeline, Easing } from "@akashic-extension/akashic-timeline";
 import { AudioPresenter } from "./AudioPresenter";
+import { SpriteFactory } from "./SpriteFactory";
 
 export class ReadyGo {
 
@@ -55,7 +54,7 @@ export class ReadyGo {
 		return this;
 	}
 
-	fadeAction(_s: g.Scene, _es: g.Sprite, delay: number, stop: number, cb: () => void) {
+	fadeAction(_s: g.Scene, _es: g.Sprite, delay: number, stop: number, cb: () => void): void {
 		const tt = new Timeline(this._s);
 		const _hdelay = delay / 2;
 		_es.scale(0);
@@ -65,11 +64,11 @@ export class ReadyGo {
 			tt.create(_es, {modified: _es.modified, destroyed: _es.destroyed})
 				.scaleTo(1, 1, _hdelay)
 				.wait(stop)
-				.fadeOut(_hdelay, easeOutQuad)
+				.fadeOut(_hdelay, Easing.easeOutQuad)
 				.con()
 				.scaleTo(1.5, 1.5, _hdelay)
 				.every(
-					(e, p) => {
+					(_e, p) => {
 						if (p <= 1) {
 							if (cb != null) {
 								cb.bind(this)();
@@ -84,11 +83,11 @@ export class ReadyGo {
 		} else {
 			tt.create(_es, {modified: _es.modified, destroyed: _es.destroyed})
 				.scaleTo(1, 1, _hdelay)
-				.fadeOut(_hdelay, easeOutQuad)
+				.fadeOut(_hdelay, Easing.easeOutQuad)
 				.con()
 				.scaleTo(1.5, 1.5, _hdelay)
 				.every(
-					(e, p) => {
+					(_e, p) => {
 						if (p <= 1) {
 							if (cb != null) {
 								cb.bind(this)();
@@ -101,39 +100,39 @@ export class ReadyGo {
 		}
 	}
 
-	fadeInAction(_s: g.Scene, _es: g.Sprite, delay: number, cb: () => void) {
+	fadeInAction(_s: g.Scene, _es: g.Sprite, delay: number, cb: () => void): void {
 		const tt = new Timeline(this._s);
 		tt.create(_es, {modified: _es.modified, destroyed: _es.destroyed})
-		.fadeOut(delay, easeOutQuad)
-		.every(
-			(e, p) => {
-				if (1 <= p) {
-					if (cb != null) {
-						cb.bind(this)();
+			.fadeOut(delay, Easing.easeOutQuad)
+			.every(
+				(_e, p) => {
+					if (1 <= p) {
+						if (cb != null) {
+							cb.bind(this)();
+						}
 					}
-				}
-			},
-			delay
-		);
+				},
+				delay
+			);
 	}
 
-	fadeOutAction(_s: g.Scene, _es: g.Sprite, delay: number, cb: () => void) {
+	fadeOutAction(_s: g.Scene, _es: g.Sprite, delay: number, cb: () => void): void {
 		const tt = new Timeline(this._s);
 		tt.create(_es, {modified: _es.modified, destroyed: _es.destroyed})
-		.fadeOut(delay, easeOutQuad)
-		.every(
-			(e, p) => {
-				if (p <= 1) {
-					if (cb != null) {
-						cb.bind(this)();
+			.fadeOut(delay, Easing.easeOutQuad)
+			.every(
+				(_e, p) => {
+					if (p <= 1) {
+						if (cb != null) {
+							cb.bind(this)();
+						}
 					}
-				}
-			},
-			delay
-		);
+				},
+				delay
+			);
 	}
 
-	destroy() {
+	destroy(): void {
 		const arr = [ this.ready, this.go, this.rootEntity ];
 		arr.forEach(x => {
 			if (!x.destroyed()) {

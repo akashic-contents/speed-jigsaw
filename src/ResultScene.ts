@@ -1,10 +1,10 @@
-import { SpriteFactory } from "./SpriteFactory";
-import { NumberFont } from "./NumberValue";
-import { Global } from "./Global";
-import { AudioPresenter } from "./AudioPresenter";
 import { Timeline } from "@akashic-extension/akashic-timeline";
 import { AStage } from "./AStage";
+import { AudioPresenter } from "./AudioPresenter";
+import { Global } from "./Global";
+import { NumberFont } from "./NumberValue";
 import { OuterParamReceiver } from "./OuterParamReceiver";
+import { SpriteFactory } from "./SpriteFactory";
 
 export class ResultScene extends AStage {
 	private scene: g.Scene;
@@ -33,7 +33,7 @@ export class ResultScene extends AStage {
 		this.scene = scene;
 	}
 
-	activate(scene: g.Scene) {
+	activate(scene: g.Scene): void {
 		AudioPresenter.instance.stopBGM();
 
 		const r = new g.E({
@@ -65,7 +65,7 @@ export class ResultScene extends AStage {
 		const _tl = new Timeline(scene);
 		_tl.create(l, {modified: l.modified, destroyed: l.destroyed})
 			.every(
-				(e, p) => {
+				(_e, p) => {
 					if (1 <= p) {
 						_tl.destroy();
 						this.val = Global.instance.score;
@@ -74,13 +74,13 @@ export class ResultScene extends AStage {
 
 					const _min = 10 ** (this.text.text.length - 1); // **は べき乗との事
 					const _max = 10 ** (this.text.text.length) - 1;
-					const _v = Global.instance.random.get(_min, _max);
+					const _v = Math.floor(Global.instance.random.generate() * (_max - _min) + _min);
 					this.val = _v | 0;
 				},
 				1500
 			);
 
-		r.pointUp.add(
+		r.onPointUp.add(
 			() => {
 				this.finishStage();
 			},
@@ -95,7 +95,7 @@ export class ResultScene extends AStage {
 		AudioPresenter.instance.playJINGLE("jin_000");
 	}
 
-	dispose() {
+	dispose(): void {
 		if (this.frame.destroyed()) {
 			return;
 		}

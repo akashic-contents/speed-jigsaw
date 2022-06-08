@@ -1,5 +1,5 @@
-import { SpriteFactory } from "./SpriteFactory";
 import { NumberFont } from "./NumberValue";
+import { SpriteFactory } from "./SpriteFactory";
 
 export class RemainPieceView extends g.E {
 

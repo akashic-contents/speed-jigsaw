@@ -1,10 +1,10 @@
-import { SpriteFactory } from "./SpriteFactory";
-import { Global } from "./Global";
-import { Util } from "./Util";
 import { AudioPresenter } from "./AudioPresenter";
+import { Global } from "./Global";
 import { Picture } from "./Picture";
 import { PieceSelectField, PieceSize } from "./PieceSelectField";
 import { RemainPieceView } from "./RemainPieceView";
+import { SpriteFactory } from "./SpriteFactory";
+import { Util } from "./Util";
 
 class LevelParam {
 	divX: number;
@@ -177,7 +177,7 @@ export class GameField extends g.E {
 						return;
 					}
 					const pi = pic.Image;
-					pi.update.add(
+					pi.onUpdate.add(
 						() => {
 							pi.opacity = Util.lerp(pi.opacity, 0, 0.3, 0.08);
 						});
@@ -187,20 +187,20 @@ export class GameField extends g.E {
 		}
 	}
 
-	dispose() {
+	dispose(): void {
 		this.destroy();
 	}
 
-	gameStart() {
+	gameStart(): void {
 		this.pieceField.get();
 	}
 
-	private createFieldImage(e: g.E) {
+	private createFieldImage(e: g.E): void {
 		const base = SpriteFactory.createPictureFrame(this.scene);
 		e.append(base);
 	}
 
-	private createFrameTouchField(e: g.E, divX: number, divY: number) {
+	private createFrameTouchField(e: g.E, divX: number, divY: number): void {
 
 		const dw = (Picture.IMAGE_PIX / divX) | 0;
 		const dh = (Picture.IMAGE_PIX / divY) | 0;
@@ -220,15 +220,15 @@ export class GameField extends g.E {
 				});
 				panel.tag = 0;
 
-				panel.update.add(
+				panel.onUpdate.add(
 					() => {
 						panel.opacity = Util.lerp(panel.opacity, panel.tag, 0.4);
 						panel.modified();
 					});
-				panel.pointDown.add(() => {
+				panel.onPointDown.add(() => {
 					panel.tag = 0.5;
 				});
-				panel.pointUp.add(() => {
+				panel.onPointUp.add(() => {
 					if (this.selectPieceIndex !== idx) {
 						panel.tag = 0;
 						panel.opacity = 0;
@@ -258,12 +258,12 @@ export class GameField extends g.E {
 		return idx === this.selectPieceIndex;
 	}
 
-	private createCorrectPieceAndAction(e: g.E, p: g.E, t: g.E) {
+	private createCorrectPieceAndAction(e: g.E, p: g.E, t: g.E): void {
 
 		const move = 0.4;
 		const th = 0.03;
 		const tp = {x: t.x, y: t.y};
-		const nss = g.Util.createSpriteFromE(this.scene, p);
+		const nss = g.SpriteFactory.createSpriteFromE(this.scene, p);
 		const ns = new g.E({scene: this.scene});
 		const wp = Util.getWorldPos(p);
 
@@ -287,7 +287,7 @@ export class GameField extends g.E {
 			}
 		}
 
-		ns.update.add(
+		ns.onUpdate.add(
 			() => {
 				// 目的地へ移動する
 				ns.x = Util.lerp(ns.x, tp.x, move, th);
