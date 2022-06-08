@@ -19,8 +19,11 @@
     "@akashic/akashic-cli-scan": "~0.15.38",
     "@akashic/akashic-engine": "~3.4.1",
     "@akashic/akashic-sandbox": "~0.17.47",
+    "@akashic/eslint-config": "^1.1.0",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.2.2",
     "rimraf": "~3.0.2",
     "eslint": "~8.16.0",
     "typescript": "~4.7.2"
