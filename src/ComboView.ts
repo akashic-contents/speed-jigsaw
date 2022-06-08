@@ -1,5 +1,5 @@
-import { SpriteFactory } from "./SpriteFactory";
 import { NumberFont, NumberType } from "./NumberValue";
+import { SpriteFactory } from "./SpriteFactory";
 
 export class ComboView extends g.E {
 
@@ -19,7 +19,7 @@ export class ComboView extends g.E {
 
 	private label: g.Label = null;
 
-	constructor(s: g.Scene, v = 0) {
+	constructor(s: g.Scene, v: number = 0) {
 		super({scene: s});
 
 		const base = SpriteFactory.createComboYellowBase(s);

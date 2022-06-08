@@ -2,7 +2,7 @@ import { Global } from "./Global";
 
 export class OuterParamReceiver {
 
-	static receiveParamFromMessage(s: g.Scene) {
+	static receiveParamFromMessage(s: g.Scene): void {
 		s.onMessage.add((msg) => {
 			if (msg.data && msg.data.type === "start") {
 				if (msg.data.parameters) {
@@ -20,11 +20,11 @@ export class OuterParamReceiver {
 		});
 	}
 
-	static paramSetting() {
+	static paramSetting(): void {
 		g.game.vars.gameState = { score: 0, playThreshold: 1, clearThreshold: 0 };
 	}
 
-	static setGlobalScore(score: number) {
+	static setGlobalScore(score: number): void {
 		if (g.game.vars.gameState) {
 			if (g.game.vars.gameState.score !== undefined) {
 				g.game.vars.gameState.score = score;
@@ -32,7 +32,7 @@ export class OuterParamReceiver {
 		}
 	}
 
-	static setClearThreashold(v: number) {
+	static setClearThreashold(v: number): void {
 		if (g.game.vars.gameState) {
 			if (g.game.vars.gameState.clearThreshold !== undefined) {
 				g.game.vars.gameState.clearThreshold = v;

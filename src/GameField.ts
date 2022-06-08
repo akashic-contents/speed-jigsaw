@@ -1,10 +1,10 @@
-import { SpriteFactory } from "./SpriteFactory";
-import { Global } from "./Global";
-import { Util } from "./Util";
 import { AudioPresenter } from "./AudioPresenter";
+import { Global } from "./Global";
 import { Picture } from "./Picture";
 import { PieceSelectField, PieceSize } from "./PieceSelectField";
 import { RemainPieceView } from "./RemainPieceView";
+import { SpriteFactory } from "./SpriteFactory";
+import { Util } from "./Util";
 
 class LevelParam {
 	divX: number;
@@ -62,10 +62,10 @@ export class GameField extends g.E {
 	private pieceField: PieceSelectField = null;
 	private remainView: RemainPieceView = null;
 
-	private selectPieceIndex = -1;
-	private pieceNum = 0;
+	private selectPieceIndex: number = -1;
+	private pieceNum: number = 0;
 
-	constructor(s: g.Scene, pictureId: number, level: number, delay = 0) {
+	constructor(s: g.Scene, pictureId: number, level: number, delay: number = 0) {
 		super({scene: s});
 
 		Global.instance.log("GameField: " + pictureId.toString());
@@ -187,20 +187,20 @@ export class GameField extends g.E {
 		}
 	}
 
-	dispose() {
+	dispose(): void {
 		this.destroy();
 	}
 
-	gameStart() {
+	gameStart(): void {
 		this.pieceField.get();
 	}
 
-	private createFieldImage(e: g.E) {
+	private createFieldImage(e: g.E): void {
 		const base = SpriteFactory.createPictureFrame(this.scene);
 		e.append(base);
 	}
 
-	private createFrameTouchField(e: g.E, divX: number, divY: number) {
+	private createFrameTouchField(e: g.E, divX: number, divY: number): void {
 
 		const dw = (Picture.IMAGE_PIX / divX) | 0;
 		const dh = (Picture.IMAGE_PIX / divY) | 0;
@@ -258,12 +258,12 @@ export class GameField extends g.E {
 		return idx === this.selectPieceIndex;
 	}
 
-	private createCorrectPieceAndAction(e: g.E, p: g.E, t: g.E) {
+	private createCorrectPieceAndAction(e: g.E, p: g.E, t: g.E): void {
 
 		const move = 0.4;
 		const th = 0.03;
 		const tp = {x: t.x, y: t.y};
-		const nss = g.SpriteFactory.createSpriteFromE(this.scene, p)
+		const nss = g.SpriteFactory.createSpriteFromE(this.scene, p);
 		const ns = new g.E({scene: this.scene});
 		const wp = Util.getWorldPos(p);
 

@@ -1,6 +1,6 @@
-import { SpriteFactory } from "./SpriteFactory";
-import { AudioPresenter } from "./AudioPresenter";
 import { AStage } from "./AStage";
+import { AudioPresenter } from "./AudioPresenter";
+import { SpriteFactory } from "./SpriteFactory";
 
 export class TitleScene extends AStage {
 	private scene: g.Scene;
@@ -19,10 +19,9 @@ export class TitleScene extends AStage {
 		s.y = (_s.game.height - s.height) / 2;
 		s.modified();
 
-		let ap = null;
 		_s.setTimeout(
 			() => {
-				ap = AudioPresenter.instance.playSE("se_002c");
+				AudioPresenter.instance.playSE("se_002c");
 
 				_s.setTimeout(
 					() => {
@@ -40,7 +39,7 @@ export class TitleScene extends AStage {
 		this.scene = _s;
 	}
 
-	dispose() {
+	dispose(): void {
 		if (this.title.destroyed()) {
 			return;
 		}

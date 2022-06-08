@@ -1,15 +1,15 @@
 import * as tl from "@akashic-extension/akashic-timeline";
+import { AStage } from "./AStage";
+import { AudioPresenter } from "./AudioPresenter";
+import { ComboView } from "./ComboView";
+import { FieldScore } from "./FieldScore";
+import { GameField } from "./GameField";
 import { GameTimer } from "./GameTimer";
 import { Global } from "./Global";
-import { AudioPresenter } from "./AudioPresenter";
-import { FieldScore } from "./FieldScore";
-import { ReadyGo } from "./ReadyGo";
-import { AStage } from "./AStage";
 import { OuterParamReceiver } from "./OuterParamReceiver";
-import { GameField } from "./GameField";
 import { Queue } from "./Queue";
+import { ReadyGo } from "./ReadyGo";
 import { TimeOver } from "./TimeOver";
-import { ComboView } from "./ComboView";
 import { Util } from "./Util";
 
 export class FieldScene extends AStage {
@@ -36,32 +36,32 @@ export class FieldScene extends AStage {
 	private scoreView: FieldScore;
 	private fieldTouchMask: g.FilledRect;
 
-	private level = 1;
-	private score = 0;
-	private combo = 0;
+	private level: number = 1;
+	private score: number = 0;
+	private combo: number = 0;
 
 	private BG: g.E[] = [];
 
 	private scene: g.Scene = null;
 	private readyGo: ReadyGo = null;
 	private comboView: ComboView = null;
-	private elapsedStartTime = 0;
-	private answerElapsedTime = 0;
-	private seethroughRemainTime = 0;
+	private elapsedStartTime: number = 0;
+	private answerElapsedTime: number = 0;
+	private seethroughRemainTime: number = 0;
 
 	private gf: Queue<GameField> = new Queue<GameField>();
 
-	private pause = false;
+	private pause: boolean = false;
 
 	private pictureNumberTable: number[] = [];
-	private lastSelectPictureNumber = -1;
+	private lastSelectPictureNumber: number = -1;
 
 	constructor(_scene: g.Scene) {
 		super();
 		this.scene = _scene;
 	}
 
-	activate(_scene: g.Scene) {
+	activate(_scene: g.Scene): void {
 		this.pause = false;
 		const _sv = new FieldScore(_scene);
 
@@ -146,7 +146,7 @@ export class FieldScene extends AStage {
 
 	gameStartInit(): void {
 		const t = this.timer;
-// 		this.elapsedStartTime = t.now;
+		// 		this.elapsedStartTime = t.now;
 
 		this.gf.peek().gameStart();
 
@@ -163,7 +163,7 @@ export class FieldScene extends AStage {
 							() => {
 								this.fieldTouchMask.show();
 								this.sceneFinish();
-						});
+							});
 					}
 				}
 			);
@@ -181,7 +181,7 @@ export class FieldScene extends AStage {
 		this.BG[1].destroy();
 	}
 
-	private generateRemainTime(lv: number) {
+	private generateRemainTime(lv: number): number {
 		// 1 + (難易度 * 0.5秒)...?
 		let time = ((10 - (lv - 1)) * 0.5) + 1;
 		if (time < 1) {
@@ -194,13 +194,13 @@ export class FieldScene extends AStage {
 		return time * 1000;
 	}
 
-	private createGameField(level: number, remain: number, startDelay = 0) {
+	private createGameField(level: number, _remain: number, startDelay: number = 0): void {
 
 		Global.instance.log("createGameField:" + level);
 
 		const g = new GameField(this.scene, this.getPictureNumber(), level, startDelay);
 		g.onPieceMatchCheck.push(
-			(idx, result, remainp) => {
+			(_idx, result, remainp) => {
 				if (result) {
 					this.combo++;
 					const score = this.generateAppendScore(remainp === 0);
@@ -227,7 +227,7 @@ export class FieldScene extends AStage {
 		this.gf.push(g);
 	}
 
-	private allRemain(delay: number) {
+	private allRemain(delay: number): void {
 		this.scene.setTimeout(
 			() => {
 				if (!Global.instance.DEBUG) {
@@ -243,14 +243,14 @@ export class FieldScene extends AStage {
 		);
 	}
 
-	private levelUpAction() {
+	private levelUpAction(): void {
 		this.level++;
 		if (FieldScene.MAX_LEVEL <= this.level) {
 			this.level = FieldScene.MAX_LEVEL;
 		}
 	}
 
-	private generateAppendScore(isClear = false) {
+	private generateAppendScore(isClear: boolean = false): number {
 		const nt = this.elapsedStartTime;
 		let score = FieldScene.SCORE_TOP - (((nt - this.answerElapsedTime) / 100) | 0);
 
@@ -265,13 +265,13 @@ export class FieldScene extends AStage {
 		return score | 0;
 	}
 
-	private addScore(add: number) {
+	private addScore(add: number): void {
 		this.score += add;
 		this.scoreView.value = this.score;
 		OuterParamReceiver.setGlobalScore(this.score);
 	}
 
-	private transitNextQuestionAsync(animationTime: number) {
+	private transitNextQuestionAsync(animationTime: number): void {
 		const _tl = new tl.Timeline(this.scene);
 
 		const bgId = 3;
@@ -280,7 +280,7 @@ export class FieldScene extends AStage {
 			.moveX(-(this.scene.game.width), animationTime, tl.Easing.easeOutQuad)
 			.con()
 			.every(
-				(e, p) => {
+				(_e, p) => {
 					if (p < 1) {
 						return;
 					}
@@ -302,7 +302,7 @@ export class FieldScene extends AStage {
 				animationTime);
 	}
 
-	private sceneFinish() {
+	private sceneFinish(): void {
 		Global.instance.score = this.score;
 		AudioPresenter.instance.stopBGM();
 		for (let n = 1, max = 3; n <= max; ++n) {
@@ -312,7 +312,7 @@ export class FieldScene extends AStage {
 		this.finishStage();
 	}
 
-	private questStart() {
+	private questStart(): void {
 		this.fieldTouchMask.hide();
 		this.answerElapsedTime = this.elapsedStartTime;
 	}

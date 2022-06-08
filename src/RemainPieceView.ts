@@ -1,5 +1,5 @@
-import { SpriteFactory } from "./SpriteFactory";
 import { NumberFont } from "./NumberValue";
+import { SpriteFactory } from "./SpriteFactory";
 
 export class RemainPieceView extends g.E {
 
@@ -18,7 +18,7 @@ export class RemainPieceView extends g.E {
 
 	private label: g.Label;
 
-	constructor(s: g.Scene, num = 0) {
+	constructor(s: g.Scene, num: number = 0) {
 		super({scene: s});
 
 		const frm = SpriteFactory.createRemainPieceFrame(s);

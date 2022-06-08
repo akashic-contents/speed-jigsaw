@@ -21,7 +21,7 @@ export class FieldScore {
 		this.rootEntity = new g.E({scene: _s, x: 0, y: 0});
 	}
 
-	init(_s: g.Scene) {
+	init(_s: g.Scene): void {
 		const _f = NumberFont.instance;
 		const _l = _f.genelateLabel28(_s);
 		this.label = _l;
@@ -36,7 +36,7 @@ export class FieldScore {
 		this.rootEntity.append(_l);
 	}
 
-	dispose() {
+	dispose(): void {
 		if (this.label.destroyed()) {
 			return;
 		}
@@ -45,7 +45,7 @@ export class FieldScore {
 		this.pt.destroy();
 	}
 
-	show(_s: g.Scene, sx: number, sy: number) {
+	show(_s: g.Scene, sx: number, sy: number): void {
 		this.rootEntity.x = sx;
 		this.rootEntity.y = sy;
 

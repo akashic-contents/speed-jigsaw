@@ -10,7 +10,7 @@ export class Queue<T> {
 		this.data = [];
 	}
 
-	push(v: T) {
+	push(v: T): void {
 		this.data.push(v);
 	}
 

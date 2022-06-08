@@ -1,6 +1,6 @@
 import { Timeline, Easing } from "@akashic-extension/akashic-timeline";
-import { SpriteFactory } from "./SpriteFactory";
 import { Global } from "./Global";
+import { SpriteFactory } from "./SpriteFactory";
 import { Util } from "./Util";
 
 export enum PieceSize {
@@ -23,7 +23,7 @@ export class PieceSelectField extends g.E {
 		return this.indexTable.length;
 	}
 
-	selectFrameIndex = -1;
+	selectFrameIndex: number = -1;
 
 	onSlideInFinish: Array<(frameIdx: number, pieceIndex: number) => void> = [];
 	onTouchGetPiece: Array<(idx: number) => boolean> = [];
@@ -41,11 +41,11 @@ export class PieceSelectField extends g.E {
 	private selectFrame: g.Sprite[] = [];
 	private pieceEntryIndex: number[] = [];
 
-	private currentShowIndex = -1;
+	private currentShowIndex: number = -1;
 
-	private lastSelect: Array<{ frameIdx: number, pieceIdx: number}> = [];
+	private lastSelect: Array<{ frameIdx: number; pieceIdx: number}> = [];
 
-	private requestCount = 0;
+	private requestCount: number = 0;
 
 	constructor(s: g.Scene, pieceSize: PieceSize, pieces: g.E[]) {
 		super({ scene: s });
@@ -97,13 +97,13 @@ export class PieceSelectField extends g.E {
 		});
 
 		this.onSlideInFinish.push(
-			(gi, idx) => {
+			(_gi, idx) => {
 				this.currentShowIndex = idx;
 				tf.forEach(_tf => _tf.touchable = true);
 			});
 	}
 
-	get() {
+	get(): void {
 		const tl = new Timeline(this.scene);
 		const layer = new g.E({ scene: this.scene });
 		const index = this.indexTable.pop();
@@ -136,7 +136,7 @@ export class PieceSelectField extends g.E {
 			.moveTo(px, py, time, Easing.easeOutQuart)
 			.con()
 			.every(
-				(e, p) => {
+				(_e, p) => {
 					if (p < 1) {
 						return;
 					}
@@ -153,7 +153,7 @@ export class PieceSelectField extends g.E {
 		}
 	}
 
-	setNextSelectFrame() {
+	setNextSelectFrame(): void {
 		this.selectFrame.forEach(x => {
 			x.opacity = 0;
 			x.modified();
@@ -173,20 +173,20 @@ export class PieceSelectField extends g.E {
 		});
 	}
 
-	releaseSelectObject() {
+	releaseSelectObject(): void {
 		Global.instance.log("releaseSelectObject(" + this.selectFrameIndex + ")");
 		this.pieceEntryIndex[this.selectFrameIndex] = -1;
 	}
 
-	private pushSelect(frameIdx: number, pieceIdx: number) {
+	private pushSelect(frameIdx: number, pieceIdx: number): void {
 		this.lastSelect.push({frameIdx: frameIdx, pieceIdx: pieceIdx});
 	}
 
-	private popSelect(): {frameIdx: number, pieceIdx: number} {
+	private popSelect(): { frameIdx: number; pieceIdx: number } {
 		return this.lastSelect.pop();
 	}
 
-	private clearSelect() {
+	private clearSelect(): void {
 		this.lastSelect = [];
 	}
 
@@ -208,7 +208,7 @@ export class PieceSelectField extends g.E {
 		return p;
 	}
 
-	private selectFrameInit(r: g.E, f: g.Sprite) {
+	private selectFrameInit(r: g.E, f: g.Sprite): void {
 
 		f.x = -(f.width / 2);
 		f.y = -(f.height / 2);

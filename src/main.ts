@@ -1,14 +1,14 @@
-import { FieldScene } from "./FieldScene";
-import { TitleScene } from "./TitleScene";
-import { ManualScene } from "./ManualScene";
-import { ResultScene } from "./ResultScene";
-import { Global } from "./Global";
 import { AudioPresenter } from "./AudioPresenter";
+import { FieldScene } from "./FieldScene";
+import { GameFont } from "./GameFont";
+import { Global } from "./Global";
+import { ManualScene } from "./ManualScene";
 import { NumberFont } from "./NumberValue";
 import { OuterParamReceiver } from "./OuterParamReceiver";
-import { GameFont } from "./GameFont";
+import { ResultScene } from "./ResultScene";
+import { TitleScene } from "./TitleScene";
 
-function main(param: g.GameMainParameterObject): void {
+function main(_param: g.GameMainParameterObject): void {
 	const scene = new g.Scene({game: g.game, assetIds: [
 		"ui_common", "ui", "ui_2",
 		"glyph28", "glyph72", "glyph32_yellow",

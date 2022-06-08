@@ -1,6 +1,6 @@
-import { SpriteFactory } from "./SpriteFactory";
 import { Timeline } from "@akashic-extension/akashic-timeline";
 import { AudioPresenter } from "./AudioPresenter";
+import { SpriteFactory } from "./SpriteFactory";
 
 export class TimeOver {
 
@@ -43,7 +43,7 @@ export class TimeOver {
 			.fadeIn(intime)
 			.wait(wait)
 			.every(
-				(e, p) => {
+				(_e, p) => {
 					if (1 <= p) {
 						tt.destroy();
 						this.finishCallback.forEach(c => c());

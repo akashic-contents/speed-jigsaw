@@ -8,9 +8,9 @@ export enum NumberType {
 }
 
 class FontInfo {
-	glyphWidth = 0;
-	glyphHeight = 0;
-	map = "";
+	glyphWidth: number = 0;
+	glyphHeight: number = 0;
+	map: string = "";
 }
 
 export class NumberFontData {
@@ -22,7 +22,7 @@ export class NumberFontData {
 		this.font = f;
 	}
 
-	destroy() {
+	destroy(): void {
 		if (!this.label.destroyed()) {
 			this.label.destroy();
 		}
@@ -33,6 +33,8 @@ export class NumberFontData {
 }
 
 export class NumberFont {
+	font28: g.BitmapFont;
+	font72: g.BitmapFont;
 
 	static generate(s: g.Scene, type: NumberType): NumberFontData {
 		const fi = NumberFont.fontInfo[type];
@@ -52,7 +54,7 @@ export class NumberFont {
 		return new NumberFontData(f, l);
 	}
 
-	private static IMAGE_NAME = "ui_common";
+	private static IMAGE_NAME: string = "ui_common";
 	private static _instance: NumberFont = null;
 
 	private static fontInfo: FontInfo[] = [
@@ -62,17 +64,14 @@ export class NumberFont {
 		{glyphWidth: 32, glyphHeight: 36, map: "glyph32_yellow"}
 	];
 
-	static get instance() {
+	static get instance(): NumberFont {
 		if (NumberFont._instance == null) {
 			NumberFont._instance = new NumberFont();
 		}
 		return NumberFont._instance;
 	}
 
-	font28: g.BitmapFont;
-	font72: g.BitmapFont;
-
-	initialize(_s: g.Scene) {
+	initialize(_s: g.Scene): void {
 		this.font28 = new g.BitmapFont({
 			src: _s.asset.getImageById(NumberFont.IMAGE_NAME),
 			map: Util.readJSON(_s, "glyph28"),
@@ -106,7 +105,7 @@ export class NumberFont {
 		});
 	}
 
-	destroy() {
+	destroy(): void {
 		if (!this.font28.destroyed()) {
 			this.font28.destroy();
 		}
